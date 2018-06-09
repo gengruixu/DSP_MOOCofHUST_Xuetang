@@ -1,0 +1,22 @@
+clear all;
+Fs = 11025;
+N = 8192;
+p = audiorecorder(2*Fs,16,1);
+p.record;
+% p.pause;
+% pause(10);
+pause(3);
+% r = play(p)
+% stop(p);
+y = p.getaudiodata();
+% y = wavrecord(N, Fs);
+y = y(N/2+1:N);
+N = 4096;
+x = linspace(0,N,N);
+subplot(2,1,1);
+plot(x,y,'b','LineWidth',1.5);
+P = fft(y',N);
+Pyy = 2 *sqrt(P.*conj(P))/N;
+f = linspace(0,Fs/2,N/2);
+subplot(2,1,2);
+plot(f,Pyy(1:N/2),'b','LineWidth',1.5);
